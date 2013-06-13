@@ -107,7 +107,13 @@ node["keystone"]["roles"].each do |role_key|
 end
 
 keystone_role "Getting Member role-id" do
+    auth_host ks_admin_endpoint["host"]
+    auth_port ks_admin_endpoint["port"]
+    auth_protocol ks_admin_endpoint["scheme"]
+    api_ver ks_admin_endpoint["path"]
+    auth_token node["keystone"]["admin_token"]
     action :get_member_role_id
+    notifies :restart, "service[keystone]", :immediately
 end
 
 node["keystone"]["users"].each do |username, user_info|

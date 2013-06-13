@@ -19,9 +19,16 @@
 
 # Workaround for https://bugs.launchpad.net/keystone/+bug/1176270
 action :get_member_role_id do
-  log "Getting member role-id from keystone."
-  member_role_id = `keystone role-list | awk 'BEGIN{FS="|";} $3 ~/Member/{print substr($2,2)}'`
-  node.set['keystone']['member_role_id'] = member_role_id
+    host = new_resource.auth_host
+    port = new_resource.auth_port
+    protocol = new_resource.auth_protocol
+    token = new_resource.auth_token
+    api_ver = new_resource.api_ver
+
+    endpoint = "#{protocol}://#{host}:#{port}/#{api_ver}/"
+    log "Getting member role-id from keystone."
+    member_role_id = `keystone --os-token #{token} --os-endpoint #{endpoint} role-list | awk 'BEGIN{FS="|";} $3 ~/Member/{print substr($2,2)}'`
+    node.set['keystone']['member_role_id'] = member_role_id
 end
 
 action :create do
