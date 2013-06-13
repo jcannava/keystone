@@ -17,6 +17,13 @@
 # limitations under the License.
 #
 
+# Workaround for https://bugs.launchpad.net/keystone/+bug/1176270
+action :get_member_role_id do
+  log "Getting member role-id from keystone."
+  member_role_id = `. /root/openrc; keystone role-list | awk 'BEGIN{FS="|";} $3 ~/Member/{print substr($2,2)}'`
+  node.set['keystone']['member_role_id'] = member_role_id
+end
+
 action :create do
   host = new_resource.auth_host
   port = new_resource.auth_port

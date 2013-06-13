@@ -39,3 +39,5 @@ attribute :role_name, :kind_of => String, :required => true
 actions :grant
 attribute :user_name, :kind_of => String, :required => true
 attribute :tenant_name, :kind_of => String
+
+actions :get_member_role_id
