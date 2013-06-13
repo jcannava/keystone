@@ -106,6 +106,10 @@ node["keystone"]["roles"].each do |role_key|
   end
 end
 
+keystone_role "Getting Member role-id" do
+    action :get_member_role_id
+end
+
 node["keystone"]["users"].each do |username, user_info|
   keystone_user "Create '#{username}' User" do
     auth_host ks_admin_endpoint["host"]

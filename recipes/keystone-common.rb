@@ -76,10 +76,6 @@ db_info = {
   "name" => settings["db"]["name"],
   "ipaddress" => mysql_info["host"] }
 
-keystone_role "Getting Member role-id" do
-    action :get_member_role_id
-end
-
 template "/etc/keystone/keystone.conf" do
   source "keystone.conf.erb"
   owner "keystone"
