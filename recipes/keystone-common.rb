@@ -100,6 +100,7 @@ template "/etc/keystone/keystone.conf" do
   if platform?(%w{redhat centos fedora scientific})
     notifies :run, "execute[keystone-manage pki_setup]", :immediately
   end
+  subscribes :create, "keystone_role[Get Member role-id]", :delayed
   notifies :restart, "service[keystone]", :immediately
 end
 
