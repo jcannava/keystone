@@ -29,7 +29,7 @@ action :get_member_role_id do
     log "Getting member role-id from keystone."
     member_role_id = `keystone --os-token #{token} --os-endpoint #{endpoint} role-list | awk 'BEGIN{FS="|";} $3 ~/Member/{print substr($2,2)}'`
     log "Member Role Id: #{member_role_id}"
-    node.set['keystone']['member_role_id'] = "#{member_role_id}"
+    node["keystone"]["member_role_id"] = "#{member_role_id}"
     new_resource.updated_by_last_action(true)
 end
 
